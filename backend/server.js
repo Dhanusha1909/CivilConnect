@@ -50,13 +50,8 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-connectDB()
-  .then(() => {
-    app.listen(PORT, "0.0.0.0", () => console.log(`[Server] RootCauseAI backend running on port ${PORT}`));
-  })
-  .catch((err) => {
-    console.error("[Server] Startup error:", err);
-    // Still listen so health checks don't hard crash the container
-    app.listen(PORT, "0.0.0.0", () => console.log(`[Server] Running in degraded mode on port ${PORT}`));
-  });
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`[Server] RootCauseAI backend running on port ${PORT}`);
+  connectDB();
+});
 
